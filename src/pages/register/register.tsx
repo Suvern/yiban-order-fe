@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Picker, View} from "@tarojs/components";
 import {AtButton, AtForm, AtInput, AtList, AtListItem, AtMessage} from "taro-ui";
 import Taro from '@tarojs/taro'
@@ -17,10 +17,19 @@ const Register = () => {
   const [position, setPosition] = useState('')
   const [cumtValidated, setCUMTValidated] = useState(false)
 
+  useEffect(() => {
+    // componentDidMount
+    Taro.showModal({
+      title: '注册须知',
+      content: '请使用中国矿业大学统一认证登录的学号/工号和密码注册，点击"验证"按钮认证通过后才能继续注册'
+    }).then(() => {
+    })
+  }, [])
+
   const onFormSubmit = async () => {
     if (username.length == 0) {
       Taro.atMessage({
-        'message': '请输入用户名',
+        'message': '请输入学号/工号',
         'type': 'error'
       })
       return
@@ -209,6 +218,7 @@ const Register = () => {
             <AtButton
               className='button-normal'
               type='primary'
+              disabled={!cumtValidated}
               onClick={onFormSubmit}
             >
               注册

@@ -14,7 +14,10 @@ const store = {
 }
 
 class App extends Component {
-  componentDidMount() {
+
+  componentWillMount() {
+    // 读缓存
+    userInfoStore.readAll()
   }
 
   render() {
