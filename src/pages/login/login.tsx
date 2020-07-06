@@ -8,7 +8,6 @@ import userInfoStore from "../../store/user_info";
 
 const Login = () => {
 
-  const [loading, setLoading] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -23,27 +22,26 @@ const Login = () => {
       return
     }
 
-    // console.log(username)
-    // console.log(password)
-
-    setLoading(true)
-    let result = await login({username: username, password: password})
-    // let result = await login({username: '04171180', password: 'a821589498wmr'})
-    Taro.showToast({
-      title: result.message,
-      duration: 2000,
+    Taro.showLoading({
+      title: '登录中...'
     }).then(async () => {
-      if (result.flag) {
-        let token = result.data['token']
-        let user = result.data['user']
-        userInfoStore.setToken(token)
-        userInfoStore.setUserInfo(user)
-        setLoading(false)
-        console.log(userInfoStore.userInfo)
-        await Taro.navigateBack()
-      }
+      let result = await login({username: username, password: password})
+      // let result = await login({username: '04171180', password: 'a821589498wmr'})
+      Taro.hideLoading()
+      Taro.showToast({
+        title: result.message,
+        icon: result.flag ? 'success' : 'none'
+      }).then(async () => {
+        if (result.flag) {
+          let token = result.data['token']
+          let user = result.data['user']
+          userInfoStore.setToken(token)
+          userInfoStore.setUserInfo(user)
+          console.log(userInfoStore.userInfo)
+          await Taro.navigateBack()
+        }
+      })
     })
-    setLoading(false)
   }
 
   return (
@@ -95,7 +93,6 @@ const Login = () => {
         <AtForm>
           <AtInput
             name='username'
-            disabled={loading}
             value={username}
             onChange={(value) => {
               setUsername(value.toString())
@@ -106,7 +103,6 @@ const Login = () => {
           />
           <AtInput
             name='password'
-            disabled={loading}
             value={password}
             onChange={(value) => {
               setPassword(value.toString())
@@ -126,7 +122,6 @@ const Login = () => {
             </AtTag>
           </AtInput>
           <AtButton
-            loading={loading}
             type='primary'
             formType='submit'
             onClick={onFormSubmit}

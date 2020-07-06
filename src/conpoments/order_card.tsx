@@ -7,7 +7,7 @@ const OrderCard = (props: {
 }) => {
 
   const renderStateIcon = (state: string) => {
-    let iconSize = 25
+    let iconSize = 20
     if (state === '审核通过') {
       return (
         <AtIcon

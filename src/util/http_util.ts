@@ -10,7 +10,7 @@ const sendRequest = async (requestArgs: {
   return Taro.request({
     url: requestArgs.url,
     method: requestArgs.method,
-    header: requestArgs.header ? requestArgs.header : {},
+    header: requestArgs.header ? requestArgs.header : '',
     data: requestArgs.data ? requestArgs.data : ''
   })
 }
