@@ -9,20 +9,23 @@ const orderStore = observable({
   },
 
   getOrderList() {
-    return this.order ? Array.prototype.slice.call(this.order) : []
+    return this.order
+      ?
+      Array.prototype.slice.call(this.order).sort((a, b) => {
+        let ta = new Date(a['date'])
+        let tb = new Date(b['date'])
+        return tb > ta ? 1 : -1
+      })
+      :
+      []
   },
 
   getOrderAgreedList() {
     if (!this.order) {
       return []
     }
-
     return this.getOrderList().filter(e => {
-      return e['bwc_agreed'] && e['dx_agreed']
-    }).sort((a, b) => {
-      let ta = new Date(a['date'])
-      let tb = new Date(b['date'])
-      return tb > ta ? 1 : -1
+      return e['state'] === '审核通过'
     })
   },
 
@@ -32,11 +35,7 @@ const orderStore = observable({
     }
 
     return this.getOrderList().filter(e => {
-      return !e['bwc_agreed'] || !e['dx_agreed']
-    }).sort((a, b) => {
-      let ta = new Date(a['date'])
-      let tb = new Date(b['date'])
-      return tb > ta ? 1 : -1
+      return e['state'] !== '审核通过'
     })
   },
 

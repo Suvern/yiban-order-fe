@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { View, Button, Text } from '@tarojs/components'
-import { observer, inject } from 'mobx-react'
+import React, {Component} from 'react'
+import {View, Button, Text} from '@tarojs/components'
+import {observer, inject} from 'mobx-react'
 
 import './index.css'
 
@@ -22,33 +22,23 @@ interface Index {
 @inject('store')
 @observer
 class Index extends Component {
-  componentWillMount () { }
-
-  componentDidMount () { }
-
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
   increment = () => {
-    const { counterStore } = this.props.store
+    const {counterStore} = this.props.store
     counterStore.increment()
   }
 
   decrement = () => {
-    const { counterStore } = this.props.store
+    const {counterStore} = this.props.store
     counterStore.decrement()
   }
 
   incrementAsync = () => {
-    const { counterStore } = this.props.store
+    const {counterStore} = this.props.store
     counterStore.incrementAsync()
   }
 
-  render () {
-    const { counterStore: { counter } } = this.props.store
+  render() {
+    const {counterStore: {counter}} = this.props.store
     return (
       <View className='index'>
         <Button onClick={this.increment}>+</Button>

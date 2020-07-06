@@ -1,25 +1,23 @@
-import React, { Component } from 'react'
-import { Provider } from 'mobx-react'
+import 'taro-ui/dist/style/index.scss'
+import React, {Component} from 'react'
+import {Provider} from 'mobx-react'
 
 import counterStore from './store/counter'
-
+import userInfoStore from "./store/user_info";
+import orderStore from "./store/order";
 import './app.css'
 
 const store = {
-  counterStore
+  counterStore,
+  userInfoStore,
+  orderStore,
 }
 
 class App extends Component {
-  componentDidMount () {}
+  componentDidMount() {
+  }
 
-  componentDidShow () {}
-
-  componentDidHide () {}
-
-  componentDidCatchError () {}
-
-  // this.props.children 就是要渲染的页面
-  render () {
+  render() {
     return (
       <Provider store={store}>
         {this.props.children}

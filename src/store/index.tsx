@@ -1,7 +1,7 @@
+import {createContext, useContext} from "react";
 import counterStore from "./counter";
 import userInfoStore from "./user_info";
 import orderStore from "./order";
-import {createContext, useContext} from "react";
 
 const store = {
   counterStore,
