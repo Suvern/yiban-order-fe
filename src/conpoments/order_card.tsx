@@ -41,7 +41,7 @@ const OrderCard = (props: {
         props.orderData
           ?
           <AtCard
-            title={`${props.orderData['unit']}`}
+            title={`单位: ${props.orderData['unit']}`}
             extra={`${props.orderData['date']}`}
             note={`申请人: ${props.orderData['person']['name']}`}
           >
@@ -54,8 +54,9 @@ const OrderCard = (props: {
               }}
             >
               <Text>{`主题:${props.orderData['content']}`}</Text>
-              <Text>{`时间段:  ${props.orderData['time']}`}</Text>
-              <Text>{`时长:${props.orderData['last_time']}`}</Text>
+              <Text>{`开始时间:${props.orderData['start_time']}`}</Text>
+              <Text>{`结束时间:${props.orderData['end_time']}`}</Text>
+              <Text>{`人数:${props.orderData['people']}`}</Text>
               <Text>{`备注:${props.orderData['extra']}`}</Text>
 
               <View style={{display: 'flex', flexDirection: 'row'}}>

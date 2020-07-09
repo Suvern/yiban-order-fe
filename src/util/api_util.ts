@@ -76,8 +76,8 @@ export const addOrder = async (
   data: {
     content: string,
     date: string,
-    time: string,
-    last_time: string,
+    start_time: string,
+    end_time: string,
     unit: string,
     extra: string
   }

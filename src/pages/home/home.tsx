@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import Taro from '@tarojs/taro'
 import {inject, observer} from "mobx-react";
-import {AtAvatar, AtList, AtListItem} from "taro-ui";
+import {AtAvatar, AtBadge, AtList, AtListItem} from "taro-ui";
 import {Text, View} from "@tarojs/components";
 import '../../app.css'
 import {logout} from "../../util/api_util";
@@ -106,6 +106,21 @@ class Home extends Component {
                 });
               }}
             />
+            <View
+              onClick={async () => {
+                await Taro.navigateTo({
+                  url: '../../pages/info/info'
+                });
+              }}
+            >
+              <AtBadge value='NEW'>
+                <AtListItem
+                  title='关于易班大厅'
+                  onClick={() => {
+                  }}
+                />
+              </AtBadge>
+            </View>
             {/*<AtListItem*/}
             {/*  title='管理员选项'*/}
             {/*  arrow='right'*/}

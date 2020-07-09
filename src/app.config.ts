@@ -5,6 +5,7 @@ export default {
     'pages/order/order',
     'pages/profile/profile',
     'pages/detail/detail',
+    'pages/info/info',
 
     'pages/register/register',
     'pages/login/login',

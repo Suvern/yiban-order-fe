@@ -1,7 +1,8 @@
 import {View} from "@tarojs/components";
+import Taro from '@tarojs/taro'
 import React, {Component} from "react";
 import {inject, observer} from "mobx-react";
-import {AtButton, AtTabs, AtTabsPane} from "taro-ui";
+import {AtButton, AtMessage, AtTabs, AtTabsPane} from "taro-ui";
 import {getOrder} from "../../util/api_util";
 import OrderList from "../../conpoments/order_list";
 
@@ -37,11 +38,25 @@ class Detail extends Component {
     }
   }
 
+  componentDidMount() {
+    Taro.showLoading({
+      title: '加载数据中...'
+    }).then(async () => {
+      await this.onRefresh()
+      Taro.hideLoading()
+    })
+  }
+
   onRefresh = async () => {
     const {orderStore} = this.props.store
 
     let result = await getOrder({phone: '', name: ''})
     let data = result.data
+
+    Taro.atMessage({
+      type: result.flag ? 'success' : 'error',
+      message: '加载完成'
+    })
     orderStore.setOrder(data)
   }
 
@@ -52,6 +67,7 @@ class Detail extends Component {
 
     return (
       <View>
+        <AtMessage/>
         <AtButton
           type='primary'
           size='small'

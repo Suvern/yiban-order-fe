@@ -11,49 +11,15 @@ const Order = () => {
 
   const [content, setContent] = useState('')
   const [date, setDate] = useState('')
-  const [lastTime, setLastTime] = useState('')
+  const [startTime, setStartTime] = useState('')
+  const [endTime, setEndTime] = useState('')
   const [unit, setUnit] = useState('')
-  const [timeQuantum, setTimeQuantum] = useState('')
   const [extra, setExtra] = useState('')
-
-  const timeQuantums = ['早上(8:00-12:00)', '下午(14:00-18:00)', '晚上(19:00-21:00)']
 
   const {userInfo} = useUserInfoStore()
 
   const onFormSubmit = async () => {
-    if (content.length == 0) {
-      Taro.atMessage({
-        'message': '请输入活动内容',
-        'type': 'error',
-      })
-      return
-    }
-    if (unit.length == 0) {
-      Taro.atMessage({
-        'message': '请输入主办单位',
-        'type': 'error',
-      })
-      return
-    }
-    if (timeQuantum.length == 0) {
-      Taro.atMessage({
-        'message': '请选择时间段',
-        'type': 'error',
-      })
-      return
-    }
-    if (date.length == 0) {
-      Taro.atMessage({
-        'message': '请选择日期',
-        'type': 'error',
-      })
-      return
-    }
-    if (lastTime.length == 0) {
-      Taro.atMessage({
-        'message': '请选择活动时长',
-        'type': 'error',
-      })
+    if (!checkFields()) {
       return
     }
 
@@ -63,8 +29,8 @@ const Order = () => {
       let result = await addOrder({
         content: content,
         date: date,
-        last_time: lastTime,
-        time: timeQuantum,
+        start_time: startTime,
+        end_time: endTime,
         unit: unit,
         extra: extra
       })
@@ -80,6 +46,52 @@ const Order = () => {
         }
       })
     })
+  }
+
+  const checkFields = () => {
+    if (content.length == 0) {
+      Taro.atMessage({
+        'message': '请输入活动内容',
+        'type': 'error',
+      })
+      return false
+    }
+    if (unit.length == 0) {
+      Taro.atMessage({
+        'message': '请输入主办单位',
+        'type': 'error',
+      })
+      return false
+    }
+    if (startTime.length == 0) {
+      Taro.atMessage({
+        'message': '请选择开始时间',
+        'type': 'error',
+      })
+      return false
+    }
+    if (endTime.length == 0) {
+      Taro.atMessage({
+        'message': '请选择结束时间',
+        'type': 'error',
+      })
+      return false
+    }
+    if (date.length == 0) {
+      Taro.atMessage({
+        'message': '请选择日期',
+        'type': 'error',
+      })
+      return false
+    }
+    if (startTime.length == 0) {
+      Taro.atMessage({
+        'message': '请选择活动时长',
+        'type': 'error',
+      })
+      return false
+    }
+    return true
   }
 
   return (
@@ -122,19 +134,6 @@ const Order = () => {
             paddingLeft: '1%'
           }}
         >
-          <Picker
-            mode='selector'
-            range={timeQuantums}
-            value={0}
-            onChange={event => setTimeQuantum(timeQuantums[event.detail.value].slice(0, 2))}
-          >
-            <AtList>
-              <AtListItem
-                title='时间段'
-                extraText={timeQuantum}
-              />
-            </AtList>
-          </Picker>
 
           <Picker
             mode='date'
@@ -164,32 +163,55 @@ const Order = () => {
 
           <Picker
             mode='time'
-            value={lastTime}
+            value={startTime}
             onChange={event => {
               let value = event.detail.value
               let time = new Date(dateFormat(new Date(), 'YYYY-mm-dd ') + value)
-              let fourHour = new Date(dateFormat(new Date(), 'YYYY-mm-dd ') + '04:00')
-              if (time > fourHour) {
-                console.log('时间不得超过4小时')
-                setLastTime('04:00')
+              let fourHour = new Date(dateFormat(new Date(), 'YYYY-mm-dd ') + '08:00')
+              if (time < fourHour) {
+                console.log('开始时间不早于08:00')
+                setStartTime('08:00')
               } else {
-                setLastTime(event.detail.value.toString())
+                setStartTime(event.detail.value.toString())
               }
             }}
           >
             <AtList>
               <AtListItem
-                title='活动时长'
-                extraText={lastTime ? lastTime : '不超过4小时'}
+                title='开始时间'
+                extraText={startTime ? startTime : '不早于08:00'}
               />
             </AtList>
           </Picker>
         </View>
 
+        <Picker
+          mode='time'
+          value={endTime}
+          onChange={event => {
+            let value = event.detail.value
+            let time = new Date(dateFormat(new Date(), 'YYYY-mm-dd ') + value)
+            let fourHour = new Date(dateFormat(new Date(), 'YYYY-mm-dd ') + '21:30')
+            if (time > fourHour) {
+              console.log('结束时间不得晚于21:30')
+              setEndTime('21:30')
+            } else {
+              setEndTime(event.detail.value.toString())
+            }
+          }}
+        >
+          <AtList>
+            <AtListItem
+              title='结束时间'
+              extraText={endTime ? endTime : '不晚于21:30'}
+            />
+          </AtList>
+        </Picker>
+
         <AtTextarea
           value={extra}
           onChange={value => setExtra(value.toString())}
-          placeholder='备注'
+          placeholder='备注(填写使用设备、桌椅摆放等)'
         />
 
         <AtButton

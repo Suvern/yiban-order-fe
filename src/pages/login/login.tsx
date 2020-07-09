@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {AtButton, AtForm, AtInput, AtTag} from "taro-ui";
+import {AtButton, AtForm, AtInput} from "taro-ui";
 import Taro from '@tarojs/taro'
 import {Image, View} from "@tarojs/components";
 import '../../app.css'
@@ -10,8 +10,6 @@ const Login = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
-  const [showPwd, setShowPwd] = useState(false)
 
   const onFormSubmit = async () => {
     if (username.length == 0 || password.length == 0) {
@@ -108,19 +106,9 @@ const Login = () => {
               setPassword(value.toString())
             }}
             title='密码'
-            type={showPwd ? 'text' : 'password'}
-            placeholder='请输入密码'>
-            <AtTag
-              size='small'
-              circle
-              active={showPwd}
-              onClick={event => {
-                setShowPwd(event.active)
-              }}
-            >
-              {'显示'}
-            </AtTag>
-          </AtInput>
+            type={'password'}
+            placeholder='请输入密码'
+          />
           <AtButton
             type='primary'
             formType='submit'
