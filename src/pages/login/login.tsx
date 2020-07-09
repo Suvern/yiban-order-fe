@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {AtButton, AtForm, AtInput} from "taro-ui";
+import {AtButton, AtForm, AtInput, AtMessage} from "taro-ui";
 import Taro from '@tarojs/taro'
 import {Image, View} from "@tarojs/components";
 import '../../app.css'
@@ -13,9 +13,9 @@ const Login = () => {
 
   const onFormSubmit = async () => {
     if (username.length == 0 || password.length == 0) {
-      await Taro.showToast({
-        title: '请输入用户名和密码',
-        duration: 2000
+      Taro.atMessage({
+        message: '请输入用户名和密码',
+        type: 'error',
       })
       return
     }
@@ -46,6 +46,7 @@ const Login = () => {
     <View
       className='page-wrapper'
     >
+      <AtMessage/>
       <View
         style={{
           textAlign: 'center',
@@ -109,23 +110,30 @@ const Login = () => {
             type={'password'}
             placeholder='请输入密码'
           />
-          <AtButton
-            type='primary'
-            formType='submit'
-            onClick={onFormSubmit}
-          >
-            登录
-          </AtButton>
-          <AtButton
-            type='secondary'
-            onClick={async () => {
-              await Taro.navigateTo({
-                url: '../../pages/register/register'
-              })
+
+          <View
+            style={{
+              marginTop: '8%'
             }}
           >
-            注册
-          </AtButton>
+            <AtButton
+              type='primary'
+              formType='submit'
+              onClick={onFormSubmit}
+            >
+              登录
+            </AtButton>
+            <AtButton
+              type='secondary'
+              onClick={async () => {
+                await Taro.navigateTo({
+                  url: '../../pages/register/register'
+                })
+              }}
+            >
+              注册
+            </AtButton>
+          </View>
         </AtForm>
       </View>
 

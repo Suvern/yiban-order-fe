@@ -13,6 +13,7 @@ const Order = () => {
   const [date, setDate] = useState('')
   const [startTime, setStartTime] = useState('')
   const [endTime, setEndTime] = useState('')
+  const [people, setPeople] = useState(0)
   const [unit, setUnit] = useState('')
   const [extra, setExtra] = useState('')
 
@@ -31,8 +32,9 @@ const Order = () => {
         date: date,
         start_time: startTime,
         end_time: endTime,
+        people: people,
         unit: unit,
-        extra: extra
+        extra: extra,
       })
       Taro.hideLoading()
       Taro.showToast({
@@ -59,6 +61,13 @@ const Order = () => {
     if (unit.length == 0) {
       Taro.atMessage({
         'message': '请输入主办单位',
+        'type': 'error',
+      })
+      return false
+    }
+    if (people == 0) {
+      Taro.atMessage({
+        'message': '请输入活动人数',
         'type': 'error',
       })
       return false
@@ -127,6 +136,29 @@ const Order = () => {
           type='text'
           title='主办单位'
           placeholder='请输入活动主办单位'
+        />
+
+        <AtInput
+          name='people'
+          value={people == 0 ? '' : String(people)}
+          onChange={value => {
+            if (Number(value) >= 50) {
+              Taro.atMessage({
+                type: 'info',
+                message: '人数不得大于50'
+              })
+              setPeople(50)
+            } else if (Number(value) <= 0) {
+              Taro.atMessage({
+                type: 'info',
+                message: '最少输入1人'
+              })
+              setPeople(1)
+            }
+          }}
+          type='number'
+          title='活动人数'
+          placeholder='请输入不超过50的数字'
         />
 
         <View
