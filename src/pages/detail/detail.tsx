@@ -55,7 +55,7 @@ class Detail extends Component {
 
     Taro.atMessage({
       type: result.flag ? 'success' : 'error',
-      message: '加载完成'
+      message: result.message
     })
     orderStore.setOrder(data)
   }

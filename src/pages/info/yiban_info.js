@@ -6,7 +6,7 @@ export const peopleInfo1 = {
 }
 export const peopleInfo2 = {
   text: '现任站长: 管永富',
-  phone: '12345678910'
+  phone: '13033530023'
 }
 export const peopleInfo3 = {
   text: '现任副站: 李红蓉',

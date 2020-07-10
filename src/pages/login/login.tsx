@@ -44,7 +44,7 @@ const Login = () => {
 
   return (
     <View
-      className='page-wrapper'
+      style={{width: '100%', height: '100%'}}
     >
       <AtMessage/>
       <View

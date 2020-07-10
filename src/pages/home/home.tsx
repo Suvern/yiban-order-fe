@@ -98,7 +98,7 @@ class Home extends Component {
               }}
             />
             <AtListItem
-              title='我的申请'
+              title='我的预约'
               arrow='right'
               onClick={async () => {
                 await Taro.navigateTo({

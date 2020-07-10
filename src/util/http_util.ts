@@ -27,6 +27,8 @@ export const commitRequest = async (requestArgs: any) => {
 
     if (msg === 'token失效') {
       msg = msg + ',请退出重新登录'
+    } else if (msg === 'token缺失') {
+      msg = msg + ',请登录'
     }
 
     return {
