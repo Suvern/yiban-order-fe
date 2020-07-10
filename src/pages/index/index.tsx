@@ -1,53 +1,27 @@
-import React, {Component} from 'react'
-import {View, Button, Text} from '@tarojs/components'
-import {observer, inject} from 'mobx-react'
+import {View} from "@tarojs/components";
+import React from "react";
+import {AtButton} from "taro-ui";
+import {validateCUMT} from "../../util/api_util";
 
-import './index.css'
+const Index = () => {
 
-type PageStateProps = {
-  store: {
-    counterStore: {
-      counter: number,
-      increment: Function,
-      decrement: Function,
-      incrementAsync: Function
-    }
-  }
-}
-
-interface Index {
-  props: PageStateProps;
-}
-
-@inject('store')
-@observer
-class Index extends Component {
-  increment = () => {
-    const {counterStore} = this.props.store
-    counterStore.increment()
+  const onTap = async () => {
+    let result = await validateCUMT({
+      username: '04171180',
+      password: 'a821589498wmr'
+    })
+    console.log(result)
   }
 
-  decrement = () => {
-    const {counterStore} = this.props.store
-    counterStore.decrement()
-  }
-
-  incrementAsync = () => {
-    const {counterStore} = this.props.store
-    counterStore.incrementAsync()
-  }
-
-  render() {
-    const {counterStore: {counter}} = this.props.store
-    return (
-      <View className='index'>
-        <Button onClick={this.increment}>+</Button>
-        <Button onClick={this.decrement}>-</Button>
-        <Button onClick={this.incrementAsync}>Add Async</Button>
-        <Text>{counter}</Text>
-      </View>
-    )
-  }
+  return (
+    <View>
+      <AtButton
+        onClick={onTap}
+      >
+        fuck
+      </AtButton>
+    </View>
+  )
 }
 
 export default Index

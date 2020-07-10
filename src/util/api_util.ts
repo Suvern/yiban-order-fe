@@ -2,8 +2,10 @@ import Taro from '@tarojs/taro'
 import {commitRequest} from "./http_util";
 import userInfoStore from "../store/user_info";
 import orderStore from "../store/order";
+import {encrypt} from "./des_util";
 
 const baseUrl = 'https://yibanorder.91cumt.com/api/'
+const metBaseUrl = 'https://met.chpz527.cn/uni'
 
 // 登录
 export const login = async (
@@ -15,7 +17,8 @@ export const login = async (
   const requestArgs = {
     url: baseUrl + 'user/login',
     method: 'POST',
-    data: JSON.stringify(data)
+    data: JSON.stringify(data),
+    header: {'content-type': 'application/json'}
   }
   return commitRequest(requestArgs)
 }
@@ -42,7 +45,8 @@ export const register = async (
   const requestArgs = {
     url: baseUrl + 'user/register',
     method: 'POST',
-    data: JSON.stringify(data)
+    data: JSON.stringify(data),
+    header: {'content-type': 'application/json'}
   }
   return commitRequest(requestArgs)
 }
@@ -64,7 +68,7 @@ export const getOrder = async (
   const requestArgs = {
     url: baseUrl + 'order',
     method: 'GET',
-    header: {'token': userInfoStore.token},
+    header: {'token': userInfoStore.token, 'content-type': 'application/json'},
     data: params
   }
 
@@ -86,8 +90,25 @@ export const addOrder = async (
   const requestArgs = {
     url: baseUrl + 'order/add',
     method: 'POST',
-    header: {'token': userInfoStore.token},
+    header: {'token': userInfoStore.token, 'content-type': 'application/json'},
     data: data,
   }
   return commitRequest(requestArgs)
+}
+
+// CUMT统一认证 返回bool
+export const validateCUMT = async (
+  data: {
+    username: string,
+    password: string,
+  }
+) => {
+  const requestArgs = {
+    url: `${metBaseUrl}/login`,
+    method: 'POST',
+    header: {'content-type': 'application/x-www-form-urlencoded'},
+    data: {'data': encrypt(JSON.stringify(data))}
+  }
+  let result = await commitRequest(requestArgs)
+  return result.message === '登录成功'
 }

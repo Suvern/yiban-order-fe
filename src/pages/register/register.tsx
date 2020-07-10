@@ -3,7 +3,7 @@ import {Picker, View} from "@tarojs/components";
 import {AtButton, AtForm, AtInput, AtList, AtListItem, AtMessage} from "taro-ui";
 import Taro from '@tarojs/taro'
 import '../../app.css'
-import {register} from "../../util/api_util";
+import {register, validateCUMT} from "../../util/api_util";
 import userInfoStore from "../../store/user_info";
 
 const Register = () => {
@@ -16,6 +16,7 @@ const Register = () => {
   const [unit, setUnit] = useState('')
   const [position, setPosition] = useState('')
   const [cumtValidated, setCUMTValidated] = useState(false)
+  const [validateLoading, setValidateLoading] = useState(false)
 
   useEffect(() => {
     // componentDidMount
@@ -27,49 +28,9 @@ const Register = () => {
   }, [])
 
   const onFormSubmit = async () => {
-    if (username.length == 0) {
-      Taro.atMessage({
-        'message': '请输入学号/工号',
-        'type': 'error'
-      })
+    if (!validateFields()) {
       return
     }
-    if (password.length == 0) {
-      Taro.atMessage({
-        'message': '请输入密码',
-        'type': 'error'
-      })
-      return
-    }
-    if (name.length == 0) {
-      Taro.atMessage({
-        'message': '请输入姓名',
-        'type': 'error'
-      })
-      return
-    }
-    if (phone.length == 0) {
-      Taro.atMessage({
-        'message': '请输入手机号',
-        'type': 'error'
-      })
-      return
-    }
-    if (gender.length == 0) {
-      Taro.atMessage({
-        'message': '请选择性别',
-        'type': 'error'
-      })
-      return
-    }
-    if (unit.length == 0) {
-      Taro.atMessage({
-        'message': '请输入单位',
-        'type': 'error'
-      })
-      return
-    }
-
     Taro.showLoading({
       title: '注册中...'
     }).then(async () => {
@@ -100,8 +61,72 @@ const Register = () => {
     })
   }
 
-  const validateCUMT = async () => {
-    setCUMTValidated(true)
+  // 验证CUMT统一认证
+  const validateAccount = async () => {
+    if (username.length == 0 || password.length == 0) {
+      Taro.atMessage({
+        'message': '请输入账号和密码',
+        'type': 'error'
+      })
+      return
+    }
+    setValidateLoading(true)
+    let result = await validateCUMT({
+      username: username,
+      password: password,
+    })
+    Taro.atMessage({
+      'message': result ? '认证成功' : '认证失败',
+      'type': result ? 'success' : 'error'
+    })
+    setValidateLoading(false)
+    setCUMTValidated(result)
+  }
+
+  const validateFields = () => {
+    if (username.length == 0) {
+      Taro.atMessage({
+        'message': '请输入学号/工号',
+        'type': 'error'
+      })
+      return false
+    }
+    if (password.length == 0) {
+      Taro.atMessage({
+        'message': '请输入密码',
+        'type': 'error'
+      })
+      return false
+    }
+    if (name.length == 0) {
+      Taro.atMessage({
+        'message': '请输入姓名',
+        'type': 'error'
+      })
+      return false
+    }
+    if (phone.length == 0) {
+      Taro.atMessage({
+        'message': '请输入手机号',
+        'type': 'error'
+      })
+      return false
+    }
+    if (gender.length == 0) {
+      Taro.atMessage({
+        'message': '请选择性别',
+        'type': 'error'
+      })
+      return false
+    }
+    if (unit.length == 0) {
+      Taro.atMessage({
+        'message': '请输入单位',
+        'type': 'error'
+      })
+      return false
+    }
+    return true
   }
 
   return (
@@ -114,6 +139,7 @@ const Register = () => {
         <AtForm>
           <AtInput
             name='username'
+            disabled={validateLoading}
             editable={!cumtValidated}
             value={username.toString()}
             onChange={(value) => {
@@ -126,6 +152,7 @@ const Register = () => {
 
           <AtInput
             name='password'
+            disabled={validateLoading}
             editable={!cumtValidated}
             value={password.toString()}
             onChange={(value) => {
@@ -143,7 +170,8 @@ const Register = () => {
                 <AtButton
                   type='secondary'
                   size='small'
-                  onClick={validateCUMT}
+                  loading={validateLoading}
+                  onClick={validateAccount}
                 >
                   验证
                 </AtButton>
@@ -168,7 +196,7 @@ const Register = () => {
               setPhone(value.toString())
             }}
             title='手机号码'
-            type='number'
+            type='phone'
             placeholder='请输入11位手机号'
           />
 
@@ -213,7 +241,7 @@ const Register = () => {
           />
 
           <View
-            style={{marginTop: '1rem',}}
+            style={{marginTop: '8%',}}
           >
             <AtButton
               className='button-normal'
@@ -228,6 +256,14 @@ const Register = () => {
               className='button-normal'
               type='secondary'
               onClick={() => {
+                setUsername('')
+                setPassword('')
+                setCUMTValidated(false)
+                setName('')
+                setPhone('')
+                setGender('')
+                setUnit('')
+                setPosition('')
               }}
             >
               重新填写

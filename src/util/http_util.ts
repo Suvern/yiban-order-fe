@@ -4,9 +4,10 @@ import Taro from '@tarojs/taro'
 const sendRequest = async (requestArgs: {
   url: string,
   method: any
-  header: {} | any,
-  data: {} | any
+  header: {},
+  data: {} | any,
 }) => {
+
   return Taro.request({
     url: requestArgs.url,
     method: requestArgs.method,

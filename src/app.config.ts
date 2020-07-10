@@ -1,6 +1,6 @@
 export default {
   pages: [
-
+    // 'pages/index/index',
     'pages/home/home',
     'pages/order/order',
     'pages/profile/profile',
@@ -10,7 +10,6 @@ export default {
     'pages/register/register',
     'pages/login/login',
 
-    'pages/index/index'
   ],
   window: {
     backgroundTextStyle: 'light',
