@@ -18,12 +18,15 @@ export default {
     navigationBarTextStyle: 'black'
   },
   tabBar: {
+    color: '#B1B2B1',
+    selectedColor: '#4F7AE1',
+    backgroundColor: '#F5F5F9',
     list: [
       {
         pagePath: 'pages/home/home',
         text: '主页',
         iconPath: 'images/home.png',
-        selectedIconPath: 'images/home_selected.png'
+        selectedIconPath: 'images/home_selected.png',
       },
       {
         pagePath: 'pages/order/order',
