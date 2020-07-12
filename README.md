@@ -45,3 +45,6 @@
 - [ ] 看富爷有什么要求了
 
 ## Appreciate
+* 感谢越爷[CaiyueDamowang](https://github.com/CaiyueDamowang)的代码嘲讽:heart:
+
+* 感谢远爷[xingyuan1998](https://github.com/xingyuan1998)的远程毒奶:thumbsup:
