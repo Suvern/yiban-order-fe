@@ -68,24 +68,25 @@ const Info = () => {
         <View className='at-article__h2'>
           中国矿业大学易班简介
         </View>
+
         <View className='at-article__p'>
           {yibanInfo}
         </View>
-        <View className='at-article__p'>
-          {yibanInfo}
-        </View>
+
         <View className='at-article__p' style={{color: '#4F79E3'}}>
           {peopleInfo1.text}
           <AtTag onClick={() => {
             toClipBoard(peopleInfo1.phone)
           }} type='primary' circle>点击复制Tel：{peopleInfo1.phone}</AtTag>
         </View>
+
         <View className='at-article__p' style={{color: '#228B22'}}>
           {peopleInfo2.text}
           <AtTag onClick={() => {
             toClipBoard(peopleInfo2.phone)
           }} type='primary' circle>点击复制Tel：{peopleInfo2.phone}</AtTag>
         </View>
+
         <View className='at-article__p' style={{color: '#228B22'}}>
           {peopleInfo3.text}
           <AtTag onClick={() => {

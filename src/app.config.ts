@@ -1,6 +1,5 @@
 export default {
   pages: [
-    // 'pages/index/index',
     'pages/home/home',
     'pages/order/order',
     'pages/profile/profile',
