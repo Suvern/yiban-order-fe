@@ -2,10 +2,9 @@ import Taro from '@tarojs/taro'
 import {commitRequest} from "./http_util";
 import userInfoStore from "../store/user_info";
 import orderStore from "../store/order";
-import {encrypt} from "./des_util";
 
 const baseUrl = 'https://yibanorder.91cumt.com/api/'
-const metBaseUrl = 'https://met.chpz527.cn/uni'
+const metBaseUrl = 'https://api.liuh321.club'
 
 // 登录
 export const login = async (
@@ -103,12 +102,25 @@ export const validateCUMT = async (
     password: string,
   }
 ) => {
-  const requestArgs = {
+
+  const createFormData = (obj = {}) => {
+    let result = ''
+    for (let name of Object.keys(obj)) {
+      let value = obj[name];
+      result +=
+        '\r\n--XXX' +
+        '\r\nContent-Disposition: form-data; name=\"' + name + '\"' +
+        '\r\n' +
+        '\r\n' + value
+    }
+    return result + '\r\n--XXX--'
+  }
+
+  let result = await Taro.request({
     url: `${metBaseUrl}/login`,
     method: 'POST',
-    header: {'content-type': 'application/x-www-form-urlencoded'},
-    data: {'data': encrypt(JSON.stringify(data))}
-  }
-  let result = await commitRequest(requestArgs)
-  return result.message === '登录成功'
+    data: createFormData(data),
+    header: {'content-type': 'multipart/form-data; boundary=----258075776767858126421870'}
+  })
+  console.log(result)
 }
