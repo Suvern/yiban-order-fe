@@ -1,9 +1,9 @@
-import {View} from "@tarojs/components";
+import {Image, View} from "@tarojs/components";
 import React, {useState} from "react";
+import {AtDivider, AtSteps, AtTag} from "taro-ui";
 import Taro from '@tarojs/taro'
 import '../../app.css'
-import {AtSteps, AtTag} from "taro-ui";
-import {peopleInfo1, peopleInfo2, peopleInfo3, yibanInfo} from "./yiban_info";
+import {flyingInfo, peopleInfo1, peopleInfo2, peopleInfo3, qqGroup, yibanInfo} from "./info_text";
 
 const Info = () => {
 
@@ -92,6 +92,58 @@ const Info = () => {
           <AtTag onClick={() => {
             toClipBoard(peopleInfo3.phone)
           }} type='primary' circle>点击复制Tel：{peopleInfo3.phone}</AtTag>
+        </View>
+      </View>
+
+      <AtDivider/>
+
+      <View className='at-article'>
+        <View style={{
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'center'
+        }}>
+          <View className='at-article__h2'>
+            中国矿业大学翔工作室简介
+          </View>
+          <View className='at-article__img'>
+            <Image
+              style={{
+                marginTop: '3vh',
+                marginBottom: '3vh',
+                width: '150px',
+                height: '30px',
+              }}
+              src={'https://s1.ax1x.com/2020/09/19/wIp6v8.png'}
+            />
+          </View>
+        </View>
+        <View className='at-article__p'>
+          {flyingInfo}
+        </View>
+        <View className='at-article__p' style={{color: '#0000ff'}}>
+          小程序开发、后端开发： 王昭君
+        </View>
+        <View className='at-article__p' style={{color: '#aabb00'}}>
+          矿小助统一认证服务开发：刘浩
+        </View>
+
+        <View
+          style={{
+            marginTop: '2vh',
+            marginBottom: '8vh',
+            marginLeft: '3vw'
+          }}
+        >
+          <AtTag
+            onClick={() => {
+              toClipBoard(qqGroup)
+            }}
+            type='primary'
+            circle
+          >
+            加入QQ群：{qqGroup} (点击复制群号)
+          </AtTag>
         </View>
       </View>
     </View>

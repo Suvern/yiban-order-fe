@@ -115,7 +115,7 @@ class Home extends Component {
             >
               <AtBadge value='NEW'>
                 <AtListItem
-                  title='关于易班大厅'
+                  title='关于'
                   onClick={() => {
                   }}
                 />

@@ -3,7 +3,7 @@ import {Picker, View} from "@tarojs/components";
 import {AtButton, AtForm, AtInput, AtList, AtListItem, AtMessage} from "taro-ui";
 import Taro from '@tarojs/taro'
 import '../../app.css'
-import {register} from "../../util/api_util";
+import {register, validateCUMT} from "../../util/api_util";
 import userInfoStore from "../../store/user_info";
 
 const Register = () => {
@@ -70,21 +70,24 @@ const Register = () => {
       })
       return
     }
-    setValidateLoading(true)
-    setCUMTValidated(true)
-    setValidateLoading(false)
 
-    // setValidateLoading(true)
-    // let result = await validateCUMT({
-    //   username: username,
-    //   password: password,
-    // })
-    // Taro.atMessage({
-    //   'message': result ? '认证成功' : '认证失败',
-    //   'type': result ? 'success' : 'error'
-    // })
-    // setValidateLoading(false)
-    // setCUMTValidated(result)
+    setValidateLoading(true)
+    let result = false
+    try {
+      result = await validateCUMT({
+        username: username,
+        password: password,
+      })
+    } catch (e) {
+      result = false
+    }
+
+    Taro.atMessage({
+      'message': result ? '认证成功' : '认证失败',
+      'type': result ? 'success' : 'error'
+    })
+    setValidateLoading(false)
+    setCUMTValidated(result)
   }
 
   const validateFields = () => {

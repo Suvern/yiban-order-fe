@@ -103,24 +103,23 @@ export const validateCUMT = async (
   }
 ) => {
 
-  const createFormData = (obj = {}) => {
-    let result = ''
-    for (let name of Object.keys(obj)) {
-      let value = obj[name];
-      result +=
-        '\r\n--XXX' +
-        '\r\nContent-Disposition: form-data; name=\"' + name + '\"' +
-        '\r\n' +
-        '\r\n' + value
-    }
-    return result + '\r\n--XXX--'
-  }
-
   let result = await Taro.request({
     url: `${metBaseUrl}/login`,
     method: 'POST',
-    data: createFormData(data),
-    header: {'content-type': 'multipart/form-data; boundary=----258075776767858126421870'}
+    header: {'content-type': 'application/x-www-form-urlencoded'},
+    data: data,
   })
-  console.log(result)
+
+  return result.data['msg'] === '登陆成功'
+}
+
+const JSONToURLEncoded = (element, key, list) => {
+  list = list || [];
+  if (typeof (element) == 'object') {
+    for (let idx in element)
+      JSONToURLEncoded(element[idx], key ? key + '[' + idx + ']' : idx, list);
+  } else {
+    list.push(key + '=' + encodeURIComponent(element));
+  }
+  return list.join('&');
 }

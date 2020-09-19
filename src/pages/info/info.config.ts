@@ -1,3 +1,3 @@
 export default {
-  navigationBarTitleText: '关于易班'
+  navigationBarTitleText: '关于'
 }
