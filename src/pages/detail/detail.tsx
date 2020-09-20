@@ -39,25 +39,25 @@ class Detail extends Component {
   }
 
   componentDidMount() {
-    Taro.showLoading({
-      title: '加载数据中...'
-    }).then(async () => {
-      await this.onRefresh()
-      Taro.hideLoading()
-    })
+    this.onRefresh().then()
   }
 
   onRefresh = async () => {
     const {orderStore} = this.props.store
 
-    let result = await getOrder({phone: '', name: ''})
-    let data = result.data
+    Taro.showLoading({
+      title: '加载数据中...'
+    }).then(async () => {
+      let result = await getOrder({phone: '', name: ''})
+      let data = result.data
 
-    Taro.atMessage({
-      type: result.flag ? 'success' : 'error',
-      message: result.message
+      Taro.atMessage({
+        type: result.flag ? 'success' : 'error',
+        message: result.message
+      })
+      orderStore.setOrder(data)
+      Taro.hideLoading()
     })
-    orderStore.setOrder(data)
   }
 
   render() {

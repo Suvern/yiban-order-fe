@@ -124,14 +124,13 @@ const Info = () => {
         <View className='at-article__p' style={{color: '#0000ff'}}>
           小程序开发、后端开发： 王昭君
         </View>
-        <View className='at-article__p' style={{color: '#aabb00'}}>
+        <View className='at-article__p' style={{color: '#0000ff'}}>
           矿小助统一认证服务开发：刘浩
         </View>
 
         <View
           style={{
             marginTop: '2vh',
-            marginBottom: '8vh',
             marginLeft: '3vw'
           }}
         >
@@ -145,6 +144,8 @@ const Info = () => {
             加入QQ群：{qqGroup} (点击复制群号)
           </AtTag>
         </View>
+
+        <View style={{height: '10vh'}}/>
       </View>
     </View>
   )
