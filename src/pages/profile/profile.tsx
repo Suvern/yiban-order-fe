@@ -60,6 +60,10 @@ class Profile extends Component {
             extraText={token ? userInfo['phone'] : ''}
           />
           <AtListItem
+            title='QQ号'
+            extraText={token ? userInfo['qq'] : ''}
+          />
+          <AtListItem
             title='管理员单位'
             extraText={token ? userInfo['admin_type'] : ''}
           />

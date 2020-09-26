@@ -12,6 +12,7 @@ const Register = () => {
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
+  const [qq, setQQ] = useState('')
   const [gender, setGender] = useState('')
   const [unit, setUnit] = useState('')
   const [position, setPosition] = useState('')
@@ -39,6 +40,7 @@ const Register = () => {
         password: password,
         name: name,
         phone: phone,
+        qq: qq,
         gender: gender,
         unit: unit,
         position: position
@@ -115,6 +117,13 @@ const Register = () => {
     if (phone.length == 0) {
       Taro.atMessage({
         'message': '请输入手机号',
+        'type': 'error'
+      })
+      return false
+    }
+    if (qq.length == 0) {
+      Taro.atMessage({
+        'message': '请输入QQ号',
         'type': 'error'
       })
       return false
@@ -205,6 +214,17 @@ const Register = () => {
             title='手机号码'
             type='phone'
             placeholder='请输入11位手机号'
+          />
+
+          <AtInput
+            name='qq'
+            value={qq.toString()}
+            onChange={(value) => {
+              setQQ(value.toString())
+            }}
+            title='QQ号码'
+            type='number'
+            placeholder='请输入QQ号'
           />
 
           <View style={{paddingLeft: '1%'}}>

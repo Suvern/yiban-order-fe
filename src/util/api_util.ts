@@ -36,6 +36,7 @@ export const register = async (
     password: string,
     name: string,
     phone: string,
+    qq: string,
     gender: string,
     unit: string,
     position: string
