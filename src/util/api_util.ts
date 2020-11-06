@@ -4,7 +4,7 @@ import userInfoStore from "../store/user_info";
 import orderStore from "../store/order";
 
 const baseUrl = 'https://yibanorder.91cumt.com/api/'
-const metBaseUrl = 'https://api.liuh321.club'
+const kxzBaseUrl = 'https://api.kxz.atcumt.com/jwxt/login'
 
 // 登录
 export const login = async (
@@ -105,13 +105,13 @@ export const validateCUMT = async (
 ) => {
 
   let result = await Taro.request({
-    url: `${metBaseUrl}/login`,
+    url: kxzBaseUrl,
     method: 'POST',
-    header: {'content-type': 'application/x-www-form-urlencoded'},
+    header: {'content-type': 'application/json'},
     data: data,
   })
 
-  return result.data['msg'] === '登陆成功'
+  return result.data['msg'] === '登录成功'
 }
 
 const JSONToURLEncoded = (element, key, list) => {

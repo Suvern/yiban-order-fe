@@ -54,6 +54,9 @@ const Login = () => {
           marginTop: '20%',
           marginBottom: '4%'
         }}
+        onClick={() => {
+          throw new Error('this is an error!')
+        }}
       >
         易班大厅预约
       </View>
