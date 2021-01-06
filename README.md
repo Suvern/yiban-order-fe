@@ -13,7 +13,7 @@
 
 ## 后端服务
 
-[Django后端项目地址](https://github.com/Suvern/yiban_order_sever)
+[Django后端项目地址](https://github.com/Suvern/yiban-order-be)
 
 ## 小程序前端
 * `Taro` 框架 + `React` + `React Hooks` + `MobX`
@@ -25,7 +25,7 @@
 ## 实现功能
 * CUMT统一认证注册
 
-使用 [矿小助](https://github.com/CaiyueDamowang/CUMT-helper) 后台接口
+使用 [矿小助](https://github.com/boopo/cumt-kxz) 后台接口
 
 注册时填写学号/工号和密码，点击验证身份后注册，保证校内实名
 
@@ -45,6 +45,5 @@
 - [ ] 看富爷有什么要求了
 
 ## Appreciate
-* 感谢越爷[CaiyueDamowang](https://github.com/CaiyueDamowang)的代码嘲讽:heart:
 
 * 感谢远爷[xingyuan1998](https://github.com/xingyuan1998)的远程毒奶:thumbsup:
